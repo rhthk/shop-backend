@@ -2,13 +2,15 @@ import express from "express";
 import Mongoose from "mongoose";
 const router = express.Router();
 //TODO change db url
-Mongoose.connect("mongodb://localhost/shop", {
+const uri =
+  "mongodb+srv://rohithkye:UfAO1zCfpJWmJ7a0@cluster0.lqhsr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+Mongoose.connect(uri, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
 const db = Mongoose.connection;
 db.on("error", (error) => console.error(error));
-db.once("open",()=>console.log("Connected to mogo"));
+db.once("open", () => console.log("Connected to mogo"));
 
 // "/products/"
 router.get("/", (req, res) => {
