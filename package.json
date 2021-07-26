@@ -1,0 +1,21 @@
+{
+  "name": "shop_api",
+  "version": "1.0.0",
+  "description": "Fake api for shop",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "set NODE_ENV=dev&& node server.js",
+    "dev": "set NODE_ENV=dev&& nodemon server.js"
+  },
+  "author": "Rohith K",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.3"
+  }
+}
