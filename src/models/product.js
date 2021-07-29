@@ -6,8 +6,8 @@ const schemaTemplate = {
     required: true,
   },
   description: {
-    trype: String,
-    // default: "Loream ipsum dolor sit. Loream dolor eluar hiyat hijam sit.",
+    type: String,
+    default: "Loream ipsum dolor sit. Loream dolor eluar hiyat hijam sit.",
   },
   img: {
     type: String,
