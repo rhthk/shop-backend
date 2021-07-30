@@ -1,6 +1,8 @@
 import express from 'express';
 import productRoute from './src/routes/product.js';
 import userRoute from './src/routes/user.js';
+import cartRoute from './src/routes/cart.js';
+
 import Mongoose from 'mongoose';
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -27,3 +29,4 @@ app.get('/', (req, res) => {
 });
 app.use('/products', productRoute);
 app.use('/user', userRoute);
+app.use('/cart',cartRoute)

@@ -1,5 +1,6 @@
 import express from 'express';
 import Product from '../models/product.js';
+import { validateProduct } from '../core/validation.js';
 const router = express.Router();
 // route for all product
 // /products/
@@ -17,36 +18,49 @@ router.get('/:id', (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 // "/products/"
-router.post('/', (req, res) => {
-  //TODO ADD VALIDATION
-  const product = new Product({
-    name: req.body.name,
-    price: 700,
-    description: req.body.description,
-    img: req.body.img
-  });
-  product
-    .save()
-    .then((result) => res.send(result))
-    .catch((err) => res.status(500).send(err));
+router.post('/', async (req, res) => {
+  const { status, message } = validateProduct(req.body);
+  if (!status) return res.send(message);
+  try {
+    const product = new Product({
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description,
+      img: req.body.img
+    });
+    const result = await product.save();
+    res.send(result);
+  } catch (err) {
+    return res.status(500).send();
+  }
 });
 
 // route to delete product
 // // "/products/:id"
-router.delete('/:id', (req, res) => {
-  Product.deleteOne({ _id: req.params.id }, (err) => res.send(err));
+router.delete('/:id', async (req, res) => {
+  try {
+    await Product.deleteOne({ _id: req.params.id });
+    resp.status(200).send();
+  } catch (err) {
+    return res.status(500).send();
+  }
 });
 
 //Troute to update products
 // "/products/:id"
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
+  const { status, message } = validateProduct(req.body);
+  if (!status) return res.send({ message });
   const product = {
     name: req.body.name,
     price: req.body.price,
     description: req.body.description
   };
-  Product.findByIdAndUpdate(req.params.id, product, (err, product) =>
-    res.send({ err, product })
-  );
+  try {
+    await Product.findByIdAndUpdate(req.params.id, product);
+    res.status(204).send();
+  } catch (err) {
+    return res.status(500).send();
+  }
 });
 export default router;
